@@ -11,6 +11,7 @@
     <bean id="doAfterThrowingExceptionMethodBean" class="ir.hri.business.DoAfterThrowingExceptionMethod"/>
     <bean id="doAroundMethodBean" class="ir.hri.business.DoAroundMethod"/>
 
+    <!-- Pointcut and an Advisor 1-->
     <bean id="simplePointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
         <property name="mappedName" value="printNameId"/>
     </bean>
@@ -18,15 +19,26 @@
         <property name="pointcut" ref="simplePointcut"/>
         <property name="advice" ref="doAroundMethodBean"/>
     </bean>
+    <!-- Pointcut and an Advisor 2-->
+    <bean id="simpleAdvisor2" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <property name="mappedName" value="checkName"/>
+        <property name="advice" ref="doBeforeMethodBean"/>
+    </bean>
+    <!-- regex match pointcut -->
+    <bean name="regexAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="patterns">
+            <list>
+                <value>.*ello.*</value>
+            </list>
+        </property>
+        <property name="advice" ref="doAroundMethodBean"/>
+    </bean>
 
     <bean id="simpleServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="simpleServiceBean"/>
         <property name="interceptorNames">
             <list>
-                <value>doBeforeMethodBean</value>
-                <value>doAfterReturningMethodBean</value>
-                <value>doAfterThrowingExceptionMethodBean</value>
-                <value>simpleAdvisor</value>
+                <value>regexAdvisor</value>
             </list>
         </property>
     </bean>

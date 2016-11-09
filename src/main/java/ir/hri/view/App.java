@@ -19,5 +19,7 @@ public class App {
         }
         System.out.println("--------------");
         simpleService.sayHello("Ireh");
+        System.out.println("--------------");
+        simpleService.hello("Ireh");
     }
 }
