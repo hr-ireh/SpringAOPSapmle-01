@@ -35,4 +35,8 @@ public class SimpleService {
     public void sayHello(String message) {
         System.out.println("SimpleService : Method sayHello() : Hello! " + message);
     }
+
+    public void hello(String message) {
+        System.out.println("SimpleService : Method hello() : Hello! " + message);
+    }
 }

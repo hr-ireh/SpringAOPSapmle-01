@@ -9,7 +9,7 @@ import ir.hri.util.SpringUtil;
 public class App {
     public static void main(String[] args) {
 
-        SimpleService simpleService = (SimpleService) SpringUtil.getApplicationContext().getBean("simpleServiceProxy");
+        SimpleService simpleService = (SimpleService) SpringUtil.getApplicationContext().getBean("simpleServiceBean"); //simpleServiceProxy
         simpleService.printNameId();
         System.out.println("--------------");
         try {

@@ -2,29 +2,34 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+     <!--Target-->
     <bean id="simpleServiceBean" class="ir.hri.business.SimpleService">
         <property name="id" value="10"/>
         <property name="name" value="HamidReza"/>
     </bean>
+
+
+    <!--Interceptor-->
     <bean id="doBeforeMethodBean" class="ir.hri.business.DoBeforeMethod"/>
     <bean id="doAfterReturningMethodBean" class="ir.hri.business.DoAfterReturningMethod"/>
     <bean id="doAfterThrowingExceptionMethodBean" class="ir.hri.business.DoAfterThrowingExceptionMethod"/>
     <bean id="doAroundMethodBean" class="ir.hri.business.DoAroundMethod"/>
 
-    <!-- Pointcut and an Advisor 1-->
+
+    <!--Pointcut and an Advisor 1-->
     <bean id="simplePointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
         <property name="mappedName" value="printNameId"/>
     </bean>
     <bean name="simpleAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
         <property name="pointcut" ref="simplePointcut"/>
-        <property name="advice" ref="doAroundMethodBean"/>
+        <property name="advice" ref="doAfterReturningMethodBean"/>
     </bean>
-    <!-- Pointcut and an Advisor 2-->
+    <!--Pointcut and an Advisor 2-->
     <bean id="simpleAdvisor2" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
         <property name="mappedName" value="checkName"/>
         <property name="advice" ref="doBeforeMethodBean"/>
     </bean>
-    <!-- regex match pointcut -->
+    <!--regex match pointcut-->
     <bean name="regexAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="patterns">
             <list>
@@ -34,14 +39,33 @@
         <property name="advice" ref="doAroundMethodBean"/>
     </bean>
 
+
+    <!--ProxyFactoryBean-->
     <bean id="simpleServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="simpleServiceBean"/>
         <property name="interceptorNames">
             <list>
-                <value>regexAdvisor</value>
+                <value>doAroundMethodBean</value>
+                <value>doBeforeMethodBean</value>
+                <value>doAfterReturningMethodBean</value>
+                <value>doAfterThrowingExceptionMethodBean</value>
             </list>
         </property>
     </bean>
-
+    <!--BeanNameAutoProxyCreator-->
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>*ServiceBean</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>doAroundMethodBean</value>
+            </list>
+        </property>
+    </bean>
+    <!--DefaultAdvisorAutoProxyCreator-->
+    <!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
 
 </beans>
