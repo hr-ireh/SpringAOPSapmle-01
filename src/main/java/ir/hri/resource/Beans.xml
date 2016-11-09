@@ -11,6 +11,14 @@
     <bean id="doAfterThrowingExceptionMethodBean" class="ir.hri.business.DoAfterThrowingExceptionMethod"/>
     <bean id="doAroundMethodBean" class="ir.hri.business.DoAroundMethod"/>
 
+    <bean id="simplePointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+        <property name="mappedName" value="printNameId"/>
+    </bean>
+    <bean name="simpleAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="pointcut" ref="simplePointcut"/>
+        <property name="advice" ref="doAroundMethodBean"/>
+    </bean>
+
     <bean id="simpleServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="simpleServiceBean"/>
         <property name="interceptorNames">
@@ -18,8 +26,10 @@
                 <value>doBeforeMethodBean</value>
                 <value>doAfterReturningMethodBean</value>
                 <value>doAfterThrowingExceptionMethodBean</value>
-                <value>doAroundMethodBean</value>
+                <value>simpleAdvisor</value>
             </list>
         </property>
     </bean>
+
+
 </beans>
