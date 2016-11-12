@@ -1,5 +1,6 @@
 package ir.hri.view;
 
+import ir.hri.business.MyService;
 import ir.hri.business.SimpleService;
 import ir.hri.util.SpringUtil;
 
@@ -21,5 +22,9 @@ public class App {
         simpleService.sayHello("Ireh");
         System.out.println("--------------");
         simpleService.hello("Ireh");
+        System.out.println("====================");
+        MyService myService = (MyService) SpringUtil.getApplicationContext().getBean("myServiceBean");
+        myService.setName("HamidReza");
+        myService.printName();
     }
 }

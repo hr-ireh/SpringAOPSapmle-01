@@ -2,19 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-     <!--Target-->
+    <!--Target-->
     <bean id="simpleServiceBean" class="ir.hri.business.SimpleService">
         <property name="id" value="10"/>
         <property name="name" value="HamidReza"/>
     </bean>
+    <bean id="myServiceBean" class="ir.hri.business.MyService"/>
 
-
-    <!--Interceptor-->
-    <bean id="doBeforeMethodBean" class="ir.hri.business.DoBeforeMethod"/>
-    <bean id="doAfterReturningMethodBean" class="ir.hri.business.DoAfterReturningMethod"/>
-    <bean id="doAfterThrowingExceptionMethodBean" class="ir.hri.business.DoAfterThrowingExceptionMethod"/>
-    <bean id="doAroundMethodBean" class="ir.hri.business.DoAroundMethod"/>
-
+    <!--Advice -->
+    <bean id="doBeforeMethodBean" class="ir.hri.advice.DoBeforeMethod"/>
+    <bean id="doAfterReturningMethodBean" class="ir.hri.advice.DoAfterReturningMethod"/>
+    <bean id="doAfterThrowingExceptionMethodBean" class="ir.hri.advice.DoAfterThrowingExceptionMethod"/>
+    <bean id="doAroundMethodBean" class="ir.hri.advice.DoAroundMethod"/>
 
     <!--Pointcut and an Advisor 1-->
     <bean id="simplePointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
